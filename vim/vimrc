@@ -1,0 +1,162 @@
+" 在通用服务器上初始化 vim 时，为为保证不对其他用户使用造成影响
+" 只有在读取到 ENABLE_VIM_CONFIG 环境变量时以下配置才会生效
+"if !(empty($ENABLE_VIM_CONFIG))
+
+" 加载 vim-plug 配置
+source ~/.vimrc_plug
+
+" ################ 标准 vim 配置 ################
+
+" 开启实时搜索功能
+set incsearch
+" 搜索时大小写不敏感
+set ignorecase
+" 关闭兼容模式
+set nocompatible
+" vim 自身命令行模式智能补全
+set wildmenu
+" 总是显示状态栏
+set laststatus=2
+" 显示光标当前位置
+set ruler
+" 开启行号显示
+set number
+" 高亮显示当前行/列(树莓派影响性能)
+" set cursorline
+" set cursorcolumn
+" 高亮显示搜索结果
+set hlsearch
+" 修复 buffer 关闭语法高亮失效问题
+set hidden
+" 将制表符扩展为空格
+set expandtab
+" 设置编辑时制表符占用空格数
+set tabstop=4
+" 设置格式化时制表符占用空格数
+set shiftwidth=4
+" 让 vim 把连续数量的空格视为一个制表符
+" set softtabstop=4
+" 基于缩进或语法进行代码折叠
+"set foldmethod=indent
+set foldmethod=syntax
+" 启动 vim 时关闭折叠代码
+set nofoldenable
+" delete 增强，解决 mac delete 删除失效问题
+set backspace=2
+" 禁止折行
+set nowrap
+" 设置编码
+set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
+set enc=utf8
+set fencs=utf8,gbk,gb2312,gb18030
+" 禁止生成撤销文件 .un~
+set noundofile
+" 禁止生成备份文件
+set nobackup
+
+" GUI 禁止显示滚动条
+set guioptions-=l
+set guioptions-=L
+set guioptions-=r
+set guioptions-=R
+" GUI 禁止显示菜单和工具条
+set guioptions-=m
+set guioptions-=T
+
+" 定义快捷键的前缀，即<Leader>
+let mapleader=";"
+" 开启文件类型侦测(自动加载对应插件)
+filetype plugin indent on
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <Leader>y "+y
+" 设置快捷键将系统剪贴板内容粘贴至 vim
+nmap <Leader>p "+p
+" 定义快捷键关闭当前分割窗口
+nmap <Leader>q :q<CR>
+" 定义快捷键保存当前窗口内容
+nmap <Leader>w :w<CR>
+" 不做任何保存，直接退出 vim
+nmap <Leader>Q :qa!<CR>
+" 跳转至右方的窗口
+nnoremap <Leader><Right><Right> <C-W>l
+" 跳转至左方的窗口
+nnoremap <Leader><Left><Left> <C-W>h
+" 跳转至上方的子窗口
+nnoremap <Leader><Up><Up> <C-W>k
+" 跳转至下方的子窗口
+nnoremap <Leader><Down><Down> <C-W>j
+" 退出插入模式自动保存
+au InsertLeave *.go,*.sh write
+" 大写 W 调用 sudo 保存
+command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+
+" ################ 自定义插件配置 ################
+
+" vim-airline/vim-airline
+" maxlinenr 两端加一下空格，否则在 Monaco 字体下会出现遮挡
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {'maxlinenr': " ☰ "}
+endif
+
+" SirVer/ultisnips
+" 自动完成代码片段触发
+let g:UltiSnipsExpandTrigger="<tab>"
+" 切换到下一个触发点
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+" 切换到上一个触发点
+let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+
+" scrooloose/nerdtree
+" 使用 NERDTree 插件查看工程文件
+nmap <Leader>fl :NERDTreeToggle<CR>
+nmap <Leader>fn :NERDTree 
+" 设置 NERDTree 子窗口宽度
+let g:NERDTreeWinSize=36
+" 设置 NERDTree 子窗口位置
+let g:NERDTreeWinPos="right"
+" 显示隐藏文件
+let g:NERDTreeShowHidden=1
+" 打开文件后自动关闭 NERDTree
+let g:NERDTreeQuitOnOpen=1
+" NERDTree 子窗口中不显示冗余帮助信息
+"let NERDTreeMinimalUI=1
+" 删除文件时自动删除文件对应 buffer
+let g:NERDTreeAutoDeleteBuffer=1
+
+" fholgado/minibufexpl.vim
+" 显示/隐藏 MiniBufExplorer 窗口
+map <Leader>bl :MBEToggle<cr>
+" buffer 切换快捷键
+map <Leader><Tab> :MBEbn<cr>
+map <Leader><S-Tab> :MBEbp<cr>
+
+" 允许用指定语法高亮配色方案替换默认方案
+syntax on
+" 配色方案(真彩色支持)
+set termguicolors
+
+" onedark.vim override: Don't set a background color when running in a terminal;
+" just use the terminal's background color
+" `gui` is the hex color code used in GUI mode/nvim true-color mode
+" `cterm` is the color code used in 256-color mode
+" `cterm16` is the color code used in 16-color mode
+if (has("autocmd") && !has("gui_running"))
+  augroup colorset
+    autocmd!
+    let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
+    autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " `bg` will not be styled since there is no `bg` setting
+  augroup END
+endif
+
+colorscheme onedark
+
+" remember last position
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+" custom file type
+autocmd BufNewFile,BufRead .user.secret set filetype=zsh
+autocmd BufNewFile,BufRead *.caddy set filetype=caddyfile
+
+"endif

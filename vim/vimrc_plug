@@ -1,0 +1,14 @@
+" Plug 插件管理
+call plug#begin('~/.vim/plugged')
+" Always loading
+Plug 'vim-airline/vim-airline'
+Plug 'terryma/vim-multiple-cursors'
+"Plug 'SirVer/ultisnips'
+"Plug 'honza/vim-snippets'
+Plug 'fholgado/minibufexpl.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'joshdick/onedark.vim'
+Plug 'earthly/earthly.vim', { 'branch': 'main' }
+" On-demand loading
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+call plug#end()

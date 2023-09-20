@@ -1,0 +1,182 @@
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   mritd <mritd@linux.com>
+#
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+    source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+# Customize to your needs...
+
+# Default umask
+umask 0022
+
+# Some custom functions
+export FPATH="${HOME}/.zsh_funcs:$FPATH"
+
+# pretty diff(need to install diff-so-fancy)
+# brew install diff-so-fancy ORRRR npm i -g diff-so-fancy
+function dff() {
+    diff -u $@ | diff-so-fancy | less --tabs=4 -RFX
+}
+
+# tmux auto attach
+function mux() {
+    tmux new-session -A -s "🍁 local"
+}
+
+# fix systemd
+# https://github.com/ohmyzsh/ohmyzsh/issues/8751
+function _systemctl_unit_state() {
+    typeset -gA _sys_unit_state
+    _sys_unit_state=( $(__systemctl list-unit-files "$PREFIX*" | awk '{print $1, $2}') )
+}
+
+# for history-substring-search module, this configuration may no longer be needed in the future
+export HISTORY_SUBSTRING_SEARCH_PREFIXED=true
+export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=true
+
+# Common Env
+export EDITOR='vim'
+export VISUAL='vim'
+
+# Use default grep colors
+export GREP_COLOR='01;31'
+export GREP_COLORS='mt=01;31'
+
+# For macOS
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    # brew
+    export HOMEBREW_PREFIX="/opt/homebrew";
+    export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+    export HOMEBREW_REPOSITORY="/opt/homebrew";
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+    export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
+    export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+
+    # GNU tools
+    # brew install coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep
+    #
+    #export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:${PATH}"
+    #export PATH="${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin:${PATH}"
+    #export PATH="${HOMEBREW_PREFIX}/opt/gnu-tar/libexec/gnubin:${PATH}"
+    #export PATH="${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin:${PATH}"
+    #export PATH="${HOMEBREW_PREFIX}/opt/gnu-indent/libexec/gnubin:${PATH}"
+    #export PATH="${HOMEBREW_PREFIX}/opt/gnu-getopt/bin:${PATH}"
+    #export PATH="${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin:${PATH}"
+
+    # OpenSSL
+    # brew install openssl
+    export PATH="${HOMEBREW_PREFIX}/opt/openssl@3/bin:${PATH}"
+    export LDFLAGS="-L${HOMEBREW_PREFIX}/opt/openssl@3/lib"
+    export CPPFLAGS="-I${HOMEBREW_PREFIX}/opt/openssl@3/include"
+    export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/opt/openssl@3/lib/pkgconfig"
+
+    # curl
+    # brew install curl
+    export PATH="${HOMEBREW_PREFIX}/opt/curl/bin:${PATH}"
+    #export LDFLAGS="-L${HOMEBREW_PREFIX}/opt/curl/lib"
+    #export CPPFLAGS="-I${HOMEBREW_PREFIX}/opt/curl/include"
+    #export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/opt/curl/lib/pkgconfig"
+    
+    # mysql
+    export PATH="${HOMEBREW_PREFIX}/opt/mysql-client/bin:${PATH}"
+
+    # ruby
+    export PATH="${HOMEBREW_PREFIX}/opt/ruby/bin:${PATH}"
+    export PATH="$(gem environment gemdir)/bin:${PATH}"
+fi
+
+# For Linux
+if [[ "$OSTYPE" =~ ^linux ]]; then
+    export LANGUAGE='en_US.UTF-8'
+    export LC_ALL='en_US.UTF-8'
+    export LC_CTYPE='UTF-8'
+    export LANG='en_US.UTF-8'
+fi
+
+# All development tools are installed in this directory
+export DEV_TOOLS="/opt/devtools"
+
+if [ -d ${DEV_TOOLS} ]; then
+    # Export all PATH
+    export PATH="${DEV_TOOLS}/bin:${DEV_TOOLS}/sbin:${PATH}"
+    for t in $(ls -d ${DEV_TOOLS}/* | grep -v bin); do
+        if [ ! -f ${t}/.skip ]; then
+            export PATH="${t}/bin:${t}/sbin:${PATH}"
+        fi
+    done
+fi
+
+# Golang
+export GOPATH="${HOME}/gopath"
+export PATH="${GOPATH}/bin:${PATH}"
+
+# Rust
+export PATH="${HOME}/.cargo/bin:${PATH}"
+
+# Java
+export JAVA_HOME="${DEV_TOOLS}/openjdk17"
+export PATH="${JAVA_HOME}/bin:${PATH}"
+
+# Maven
+export M2_HOME="${DEV_TOOLS}/maven"
+
+# krew
+export PATH="${KREW_ROOT:-${HOME}/.krew}/bin:${PATH}"
+
+# Docker build default platform
+#export DOCKER_DEFAULT_PLATFORM="linux/amd64"
+
+# Common Aliases
+#
+# Overwrite Aliases
+# see also: https://github.com/sorin-ionescu/prezto/blob/master/modules/utility/init.zsh
+alias l='ls -alh'
+alias lm='ls -alh | "$PAGER"'
+
+# alias bat to cat
+# https://github.com/sharkdp/bat
+if command -v bat &> /dev/null; then
+    alias cat='bat --theme OneHalfDark --style=plain --paging=never'
+fi
+
+# ncdu
+# https://g.blicky.net/ncdu.git/
+if command -v ncdu &> /dev/null; then
+    if [[ "$OSTYPE" =~ ^linux ]]; then
+        alias ncdu='ncdu --color dark --exclude-kernfs'
+    else
+        alias ncdu='ncdu --color dark'
+    fi
+fi
+
+# xh
+# https://github.com/ducaale/xh
+if command -v xh &> /dev/null; then
+    alias http='xh'
+    alias https='xh --https'
+fi
+
+# command completion
+for cmd in docker nerdctl podman kubectl helm; do
+    if command -v ${cmd} &> /dev/null && [[ ! -f ${HOME}/.zsh_funcs/_${cmd} ]]; then
+        ${cmd} completion zsh > ${HOME}/.zsh_funcs/_${cmd}
+    fi
+done
+
+# fix zsh completion
+autoload -Uz compinit && compinit
+
+# User Secret 
+# Define the secret configuration in this file, prezto automatically loads it
+test -e "${HOME}/.user.secret" && source "${HOME}/.user.secret"
+
+# Custom Aliases
+alias mg='echo -e "\033[31mFFFFFFFFucking mg editor...\033[0m"'
+alias kuebctl='kubectl'
+alias dc='docker compose'
