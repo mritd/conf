@@ -18,6 +18,8 @@ umask 0022
 # Some custom functions
 export FPATH="${HOME}/.zsh_funcs:${FPATH}"
 
+# delta
+# https://github.com/dandavison/delta
 function dff(){
     delta $@
 }
@@ -136,6 +138,19 @@ export PATH="${KREW_ROOT:-${HOME}/.krew}/bin:${PATH}"
 # see also: https://github.com/sorin-ionescu/prezto/blob/master/modules/utility/init.zsh
 alias l='ls -alh'
 alias lm='ls -alh | "$PAGER"'
+
+# Enable Globbing
+# https://github.com/sorin-ionescu/prezto/tree/master/modules/utility#disabled-file-globbing
+unalias bower
+unalias fc
+unalias find
+unalias ftp
+unalias history
+unalias locate
+unalias rake
+unalias rsync
+unalias scp
+unalias sftp
 
 # alias bat to cat
 # https://github.com/sharkdp/bat
