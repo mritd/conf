@@ -16,12 +16,10 @@ fi
 umask 0022
 
 # Some custom functions
-export FPATH="${HOME}/.zsh_funcs:$FPATH"
+export FPATH="${HOME}/.zsh_funcs:${FPATH}"
 
-# pretty diff(need to install diff-so-fancy)
-# brew install diff-so-fancy ORRRR npm i -g diff-so-fancy
-function dff() {
-    diff -u $@ | diff-so-fancy | less --tabs=4 -RFX
+function dff(){
+    delta $@
 }
 
 # tmux auto attach
