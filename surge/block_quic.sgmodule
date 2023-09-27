@@ -1,0 +1,5 @@
+#!name=Block QUIC
+#!desc=Block QUIC Traffic
+
+[Rule]
+AND, ((PROTOCOL,UDP),(DEST-PORT,443)), REJECT-NO-DROP

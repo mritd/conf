@@ -1,0 +1,5 @@
+#!name=Block YouTube QUIC
+#!desc=Block YouTube QUIC Traffic
+
+[Rule]
+AND,((PROTOCOL,UDP),(DOMAIN-SUFFIX,googlevideo.com)),REJECT-NO-DROP
