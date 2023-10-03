@@ -1,0 +1,30 @@
+[delta]
+    features = kovacs
+[delta "kovacs"]
+    # 黑色主题
+    dark = true
+    # 代码主题
+    syntax-theme = OneHalfDark
+    # 顶部提交样式
+    commit-decoration-style = bold box
+    # 关闭差异文件显示
+    file-style = omit
+    # 文件头部样式
+    hunk-header-decoration-style = "#c8d9f5" box ul
+    hunk-header-file-style = "#F4D03F"
+    hunk-header-line-number-style = bold "#27AE60"
+    hunk-header-style = file line-number syntax
+    # 行号样式
+    line-numbers = true
+    line-numbers-left-style = "#BDC3C7"
+    line-numbers-right-style = "#BDC3C7"
+    line-numbers-plus-style = "#2CCE96"
+    line-numbers-minus-style = "#f6546a"
+    line-numbers-zero-style = "#BDC3C7"
+    # 新增样式
+    plus-style = bold "#2CCE96"
+    plus-emph-style = "#2CCE96"
+    # 删除样式
+    minus-style = bold "#f6546a"
+    minus-emph-style = "#f6546a"
+    zero-style = "#BDC3C7"

@@ -1,0 +1,31 @@
+[include]
+    path = /opt/conf/gitconfig_gpg
+    path = /opt/conf/gitconfig_repos
+    path = /opt/conf/gitconfig_delta
+[core]
+    editor = vim
+    excludesfile = /opt/conf/gitconfig_ignore
+    quotepath = false
+    #pager = diff-so-fancy | less --tabs=4 -RFX
+    pager = delta
+    autocrlf = input
+    precomposeUnicode = true
+[interactive]
+    diffFilter = delta --color-only
+[init]
+    defaultBranch = master
+[push]
+    default = simple
+[merge]
+    conflictstyle = diff3
+[pull]
+    rebase = false
+[alias]
+    dff = diff
+    co = checkout
+    sw = switch
+    br = branch
+    st = status
+    lg = log --oneline  --decorate --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen (%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    mrg = merge --no-ff
+    root = rev-parse --show-toplevel
