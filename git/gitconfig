@@ -26,6 +26,6 @@
     sw = switch
     br = branch
     st = status
-    lg = log --oneline  --decorate --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen (%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    lg = log --oneline --decorate --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen (%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     mrg = merge --no-ff
     root = rev-parse --show-toplevel
