@@ -77,6 +77,12 @@ nmap <Leader>q :q<CR>
 nmap <Leader>w :w<CR>
 " 不做任何保存，直接退出 vim
 nmap <Leader>Q :qa!<CR>
+" In normal mode, <leader>c is an operator that will copy the given text to the clipboard.
+nmap <leader>c <Plug>OSCYankOperator
+" In normal mode, <leader>cc will copy the current line.
+nmap <leader>cc <leader>c_
+" In visual mode, <leader>c will copy the current selection.
+vmap <leader>c <Plug>OSCYankVisual
 " 跳转至右方的窗口
 nnoremap <Leader><Right><Right> <C-W>l
 " 跳转至左方的窗口
@@ -160,3 +166,4 @@ autocmd BufNewFile,BufRead .user.secret set filetype=zsh
 autocmd BufNewFile,BufRead *.caddy set filetype=caddyfile
 
 "endif
+
