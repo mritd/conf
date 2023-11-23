@@ -142,8 +142,8 @@ alias lm='ls -alh | "$PAGER"'
 # Enable Globbing
 # https://github.com/sorin-ionescu/prezto/tree/master/modules/utility#disabled-file-globbing
 for cmd in bower fc find fpt history locate rake rsync scp sftp; do
-    cmd_type=$(type -t "${cmd}")
-    if [ "${cmd_type}" == "alias" ]; then
+    cmd_type=$(whence -w "${cmd}")
+    if [ "${cmd_type}" = "alias" ]; then
         unalias ${cmd}
     fi
 done
