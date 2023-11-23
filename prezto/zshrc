@@ -157,6 +157,9 @@ unalias sftp
 if command -v bat &> /dev/null; then
     alias cat='bat --theme OneHalfDark --style=plain --paging=never'
 fi
+if command -v batcat &> /dev/null; then
+    alias cat='batcat --theme OneHalfDark --style=plain --paging=never'
+fi
 
 # ncdu
 # https://g.blicky.net/ncdu.git/
