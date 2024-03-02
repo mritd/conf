@@ -1,7 +1,6 @@
 {
     "init": true,
     "data-root": "/data/docker",
-    "exec-opts": ["native.cgroupdriver=systemd"],
     "live-restore": true,
     "log-driver": "json-file",
     "log-level": "info",
