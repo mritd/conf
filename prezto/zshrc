@@ -15,9 +15,6 @@ fi
 # Default umask
 umask 0022
 
-# Some custom functions
-export FPATH="${HOME}/.zsh_funcs:${FPATH}"
-
 # delta
 # https://github.com/dandavison/delta
 function dff(){
@@ -57,6 +54,9 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
     export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
     export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+
+    # brew zsh completion
+    export FPATH="${HOMEBREW_PREFIX}/share/zsh/site-functions:${FPATH}"
 
     # GNU tools
     # brew install coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep
@@ -128,6 +128,9 @@ export M2_HOME="${DEV_TOOLS}/maven"
 
 # krew
 export PATH="${KREW_ROOT:-${HOME}/.krew}/bin:${PATH}"
+
+# Some custom functions
+export FPATH="${HOME}/.zsh_funcs:${FPATH}"
 
 # Docker build default platform
 #export DOCKER_DEFAULT_PLATFORM="linux/amd64"
