@@ -63,6 +63,9 @@ set guioptions-=R
 set guioptions-=m
 set guioptions-=T
 
+" 自动保存的临时文件存放在当前目录
+set directory=.
+
 " 定义快捷键的前缀，即<Leader>
 let mapleader=";"
 " 开启文件类型侦测(自动加载对应插件)
