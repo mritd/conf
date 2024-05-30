@@ -1,0 +1,36 @@
+#!name=Block Parallels Desktop
+#!desc=Block All Parallels Desktop Request
+
+
+[Rule]
+DOMAIN-SUFFIX,parallels.cn,REJECT
+DOMAIN-SUFFIX,parallels.de,REJECT
+DOMAIN-SUFFIX,parallels.es,REJECT
+DOMAIN-SUFFIX,parallels.fr,REJECT
+DOMAIN-SUFFIX,parallels.nl,REJECT
+DOMAIN-SUFFIX,parallels.pt,REJECT
+DOMAIN-SUFFIX,parallels.ru,REJECT
+DOMAIN-SUFFIX,parallels.cn,REJECT
+DOMAIN-SUFFIX,parallels.com,REJECT
+
+DOMAIN-SUFFIX,myparallels.cn,REJECT
+DOMAIN-SUFFIX,myparallels.de,REJECT
+DOMAIN-SUFFIX,myparallels.es,REJECT
+DOMAIN-SUFFIX,myparallels.fr,REJECT
+DOMAIN-SUFFIX,myparallels.nl,REJECT
+DOMAIN-SUFFIX,myparallels.pt,REJECT
+DOMAIN-SUFFIX,myparallels.ru,REJECT
+DOMAIN-SUFFIX,myparallels.cn,REJECT
+DOMAIN-SUFFIX,myparallels.com,REJECT
+
+DOMAIN-SUFFIX,parallelskorea.cn,REJECT
+DOMAIN-SUFFIX,parallelskorea.de,REJECT
+DOMAIN-SUFFIX,parallelskorea.es,REJECT
+DOMAIN-SUFFIX,parallelskorea.fr,REJECT
+DOMAIN-SUFFIX,parallelskorea.nl,REJECT
+DOMAIN-SUFFIX,parallelskorea.pt,REJECT
+DOMAIN-SUFFIX,parallelskorea.ru,REJECT
+DOMAIN-SUFFIX,parallelskorea.cn,REJECT
+DOMAIN-SUFFIX,parallelskorea.com,REJECT
+
+DOMAIN-SUFFIX,parallels.com.cdn.cloudflare.net,REJECT
