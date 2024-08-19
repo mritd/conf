@@ -142,6 +142,17 @@ export FPATH="${HOME}/.zsh_funcs:${FPATH}"
 alias l='ls -alh'
 alias lm='ls -alh | "$PAGER"'
 
+unalias bower
+unalias fc
+unalias find
+unalias ftp
+unalias history
+unalias locate
+unalias rake
+unalias rsync
+unalias scp
+unalias sftp
+
 # Enable Globbing
 # https://github.com/sorin-ionescu/prezto/tree/master/modules/utility#disabled-file-globbing
 for cmd in bower fc find fpt history locate rake rsync scp sftp; do
