@@ -26,13 +26,6 @@ function mux() {
     tmux new-session -A -s "🍁 local"
 }
 
-# fix systemd
-# https://github.com/ohmyzsh/ohmyzsh/issues/8751
-function _systemctl_unit_state() {
-    typeset -gA _sys_unit_state
-    _sys_unit_state=( $(__systemctl list-unit-files "$PREFIX*" | awk '{print $1, $2}') )
-}
-
 # for history-substring-search module, this configuration may no longer be needed in the future
 export HISTORY_SUBSTRING_SEARCH_PREFIXED=true
 export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=true
