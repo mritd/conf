@@ -53,7 +53,6 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
 
     # GNU tools
     # brew install coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep
-    #
     export PATH="${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin:${PATH}"
     export PATH="${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin:${PATH}"
     export PATH="${HOMEBREW_PREFIX}/opt/gnu-tar/libexec/gnubin:${PATH}"
