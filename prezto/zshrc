@@ -54,13 +54,13 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     # GNU tools
     # brew install coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep
     #
-    #export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:${PATH}"
-    #export PATH="${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin:${PATH}"
-    #export PATH="${HOMEBREW_PREFIX}/opt/gnu-tar/libexec/gnubin:${PATH}"
-    #export PATH="${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin:${PATH}"
-    #export PATH="${HOMEBREW_PREFIX}/opt/gnu-indent/libexec/gnubin:${PATH}"
-    #export PATH="${HOMEBREW_PREFIX}/opt/gnu-getopt/bin:${PATH}"
-    #export PATH="${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin:${PATH}"
+    export PATH="${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin:${PATH}"
+    export PATH="${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin:${PATH}"
+    export PATH="${HOMEBREW_PREFIX}/opt/gnu-tar/libexec/gnubin:${PATH}"
+    export PATH="${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin:${PATH}"
+    export PATH="${HOMEBREW_PREFIX}/opt/gnu-indent/libexec/gnubin:${PATH}"
+    export PATH="${HOMEBREW_PREFIX}/opt/gnu-getopt/bin:${PATH}"
+    export PATH="${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin:${PATH}"
 
     # OpenSSL
     # brew install openssl
