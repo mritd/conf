@@ -26,6 +26,10 @@ function mux() {
     tmux new-session -A -s "🍁 local"
 }
 
+function lower() {
+    echo $@ | tr '[:upper:]' '[:lower:]'
+}
+
 # for history-substring-search module, this configuration may no longer be needed in the future
 export HISTORY_SUBSTRING_SEARCH_PREFIXED=true
 export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=true
@@ -41,12 +45,15 @@ export GREP_COLORS='mt=01;31'
 # For macOS
 if [[ "$OSTYPE" =~ ^darwin ]]; then
     # brew
-    export HOMEBREW_PREFIX="/opt/homebrew";
-    export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
-    export HOMEBREW_REPOSITORY="/opt/homebrew";
-    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
-    export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
-    export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+    export HOMEBREW_PREFIX="/opt/homebrew"
+    export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+    export HOMEBREW_REPOSITORY="/opt/homebrew"
+    export HOMEBREW_NO_ENV_HINTS=1
+    export HOMEBREW_BUNDLE_DUMP_NO_GO=1
+    export HOMEBREW_BUNDLE_DUMP_NO_VSCODE=1
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}"
+    export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
+    export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
 
     # brew zsh completion
     export FPATH="${HOMEBREW_PREFIX}/share/zsh/site-functions:${FPATH}"
@@ -114,6 +121,9 @@ export PATH="${GOPATH}/bin:${PATH}"
 # Rust
 export PATH="${HOME}/.cargo/bin:${PATH}"
 
+# Solana
+export PATH="${HOME}/.local/share/solana/install/active_release/bin:${PATH}"
+
 # Java
 export JAVA_HOME="${DEV_TOOLS}/openjdk17"
 export PATH="${JAVA_HOME}/bin:${PATH}"
@@ -123,6 +133,13 @@ export M2_HOME="${DEV_TOOLS}/maven"
 
 # krew
 export PATH="${KREW_ROOT:-${HOME}/.krew}/bin:${PATH}"
+
+# pyenv
+export PYENV_ROOT="${HOME}/.pyenv"
+if [ -d ${PYENV_ROOT}/bin ]; then
+    export PATH="${PYENV_ROOT}/bin:${PATH}"
+    eval "$(pyenv init - zsh)"
+fi
 
 # Some custom functions
 export FPATH="${HOME}/.zsh_funcs:${FPATH}"
@@ -147,6 +164,9 @@ unalias rake
 unalias rsync
 unalias scp
 unalias sftp
+
+# Disable file overwrite detection
+unsetopt noclobber
 
 # Enable Globbing
 # https://github.com/sorin-ionescu/prezto/tree/master/modules/utility#disabled-file-globbing
