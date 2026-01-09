@@ -1,96 +1,86 @@
-#
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   mritd <mritd@linux.com>
-#
+# ============================================================================
+# Zsh 配置文件
+# Author: mritd <mritd@linux.com>
+# ============================================================================
 
-# Source Prezto.
+# ============================================================================
+# Prezto
+# ============================================================================
+
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
     source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Customize to your needs...
+# ============================================================================
+# 基础设置
+# ============================================================================
 
-# Default umask
+# 默认权限掩码
 umask 0022
 
-# delta
-# https://github.com/dandavison/delta
-function dff(){
-    delta $@
-}
-
-# tmux auto attach
-function mux() {
-    tmux new-session -A -s "🍁 local"
-}
-
-function lower() {
-    echo $@ | tr '[:upper:]' '[:lower:]'
-}
-
-# for history-substring-search module, this configuration may no longer be needed in the future
-export HISTORY_SUBSTRING_SEARCH_PREFIXED=true
-export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=true
-
-# Common Env
+# 编辑器
 export EDITOR='vim'
 export VISUAL='vim'
 
-# Use default grep colors
+# Grep 颜色
 export GREP_COLOR='01;31'
 export GREP_COLORS='mt=01;31'
 
-# For macOS
+# 历史搜索
+export HISTORY_SUBSTRING_SEARCH_PREFIXED=true
+export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=true
+
+# 允许文件覆盖
+unsetopt noclobber
+
+# ============================================================================
+# macOS 配置
+# ============================================================================
+
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-    # brew
+    # Homebrew
     export HOMEBREW_PREFIX="/opt/homebrew"
     export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
     export HOMEBREW_REPOSITORY="/opt/homebrew"
     export HOMEBREW_NO_ENV_HINTS=1
     export HOMEBREW_BUNDLE_DUMP_NO_GO=1
     export HOMEBREW_BUNDLE_DUMP_NO_VSCODE=1
-    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}"
+
+    # Homebrew PATH
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}"
     export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
     export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
-
-    # brew zsh completion
     export FPATH="${HOMEBREW_PREFIX}/share/zsh/site-functions:${FPATH}"
 
-    # GNU tools
-    # brew install coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep
-    export PATH="${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin:${PATH}"
-    export PATH="${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin:${PATH}"
-    export PATH="${HOMEBREW_PREFIX}/opt/gnu-tar/libexec/gnubin:${PATH}"
-    export PATH="${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin:${PATH}"
-    export PATH="${HOMEBREW_PREFIX}/opt/gnu-indent/libexec/gnubin:${PATH}"
-    export PATH="${HOMEBREW_PREFIX}/opt/gnu-getopt/bin:${PATH}"
-    export PATH="${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin:${PATH}"
+    # GNU 工具 (brew install coreutils findutils gnu-tar gnu-sed gawk gnu-indent gnu-getopt grep)
+    for tool in coreutils findutils gnu-tar gnu-sed gnu-indent grep; do
+        [[ -d "${HOMEBREW_PREFIX}/opt/${tool}/libexec/gnubin" ]] && \
+            export PATH="${HOMEBREW_PREFIX}/opt/${tool}/libexec/gnubin:${PATH}"
+    done
+    [[ -d "${HOMEBREW_PREFIX}/opt/gnu-getopt/bin" ]] && \
+        export PATH="${HOMEBREW_PREFIX}/opt/gnu-getopt/bin:${PATH}"
 
     # OpenSSL
-    # brew install openssl
-    export PATH="${HOMEBREW_PREFIX}/opt/openssl@3/bin:${PATH}"
-    export LDFLAGS="-L${HOMEBREW_PREFIX}/opt/openssl@3/lib"
-    export CPPFLAGS="-I${HOMEBREW_PREFIX}/opt/openssl@3/include"
-    export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/opt/openssl@3/lib/pkgconfig"
+    if [[ -d "${HOMEBREW_PREFIX}/opt/openssl@3" ]]; then
+        export PATH="${HOMEBREW_PREFIX}/opt/openssl@3/bin:${PATH}"
+        export LDFLAGS="-L${HOMEBREW_PREFIX}/opt/openssl@3/lib"
+        export CPPFLAGS="-I${HOMEBREW_PREFIX}/opt/openssl@3/include"
+        export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/opt/openssl@3/lib/pkgconfig"
+    fi
 
     # curl
-    # brew install curl
-    export PATH="${HOMEBREW_PREFIX}/opt/curl/bin:${PATH}"
-    #export LDFLAGS="-L${HOMEBREW_PREFIX}/opt/curl/lib"
-    #export CPPFLAGS="-I${HOMEBREW_PREFIX}/opt/curl/include"
-    #export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/opt/curl/lib/pkgconfig"
-    
-    # mysql
-    export PATH="${HOMEBREW_PREFIX}/opt/mysql-client/bin:${PATH}"
+    [[ -d "${HOMEBREW_PREFIX}/opt/curl/bin" ]] && \
+        export PATH="${HOMEBREW_PREFIX}/opt/curl/bin:${PATH}"
 
-    # ruby
-    export PATH="${HOMEBREW_PREFIX}/opt/ruby/bin:${PATH}"
-    export PATH="$(gem environment gemdir)/bin:${PATH}"
+    # MySQL client
+    [[ -d "${HOMEBREW_PREFIX}/opt/mysql-client/bin" ]] && \
+        export PATH="${HOMEBREW_PREFIX}/opt/mysql-client/bin:${PATH}"
 fi
 
-# For Linux
+# ============================================================================
+# Linux 配置
+# ============================================================================
+
 if [[ "$OSTYPE" =~ ^linux ]]; then
     export LANGUAGE='en_US.UTF-8'
     export LC_ALL='en_US.UTF-8'
@@ -98,23 +88,23 @@ if [[ "$OSTYPE" =~ ^linux ]]; then
     export LANG='en_US.UTF-8'
 fi
 
-# All development tools are installed in this directory
-export DEV_TOOLS="/opt/devtools"
+# ============================================================================
+# 开发工具 PATH
+# ============================================================================
 
-if [ -d ${DEV_TOOLS} ]; then
-    # Export all PATH
+# DevTools (/opt/devtools)
+export DEV_TOOLS="/opt/devtools"
+if [[ -d "${DEV_TOOLS}" ]]; then
     export PATH="${DEV_TOOLS}/bin:${DEV_TOOLS}/sbin:${PATH}"
-    for t in $(ls -d ${DEV_TOOLS}/* | grep -v bin); do
-        if [ ! -f ${t}/.skip ]; then
-            export PATH="${t}/bin:${t}/sbin:${PATH}"
-        fi
+    for dir in "${DEV_TOOLS}"/*(/N); do
+        [[ ! -f "${dir}/.skip" ]] && export PATH="${dir}/bin:${dir}/sbin:${PATH}"
     done
 fi
 
-# User Bin
+# 用户本地 bin
 export PATH="${HOME}/.local/bin:${PATH}"
 
-# Golang
+# Go
 export GOPATH="${HOME}/gopath"
 export PATH="${GOPATH}/bin:${PATH}"
 
@@ -122,73 +112,63 @@ export PATH="${GOPATH}/bin:${PATH}"
 export PATH="${HOME}/.cargo/bin:${PATH}"
 
 # Solana
-export PATH="${HOME}/.local/share/solana/install/active_release/bin:${PATH}"
+[[ -d "${HOME}/.local/share/solana/install/active_release/bin" ]] && \
+    export PATH="${HOME}/.local/share/solana/install/active_release/bin:${PATH}"
 
-# Java
-export JAVA_HOME="${DEV_TOOLS}/openjdk17"
-export PATH="${JAVA_HOME}/bin:${PATH}"
-
-# Maven
-export M2_HOME="${DEV_TOOLS}/maven"
-
-# krew
+# Krew (kubectl plugin manager)
 export PATH="${KREW_ROOT:-${HOME}/.krew}/bin:${PATH}"
 
-# pyenv
-export PYENV_ROOT="${HOME}/.pyenv"
-if [ -d ${PYENV_ROOT}/bin ]; then
-    export PATH="${PYENV_ROOT}/bin:${PATH}"
-    eval "$(pyenv init - zsh)"
-fi
-
-# Some custom functions
+# 自定义 zsh 函数
 export FPATH="${HOME}/.zsh_funcs:${FPATH}"
 
-# Docker build default platform
-#export DOCKER_DEFAULT_PLATFORM="linux/amd64"
+# ============================================================================
+# Prezto 覆盖设置
+# ============================================================================
 
-# Common Aliases
-#
-# Overwrite Aliases
-# see also: https://github.com/sorin-ionescu/prezto/blob/master/modules/utility/init.zsh
+# 恢复被 prezto/utility 模块 noglob 的命令
+# https://github.com/sorin-ionescu/prezto/tree/master/modules/utility#disabled-file-globbing
+for cmd in bower fc find ftp history locate rake rsync scp sftp; do
+    (( $+aliases[$cmd] )) && unalias $cmd
+done
+
+# ============================================================================
+# 别名
+# ============================================================================
+
+# ls
 alias l='ls -alh'
 alias lm='ls -alh | "$PAGER"'
 
-unalias bower
-unalias fc
-unalias find
-unalias ftp
-unalias history
-unalias locate
-unalias rake
-unalias rsync
-unalias scp
-unalias sftp
+# delta (git diff viewer)
+alias dff='delta'
 
-# Disable file overwrite detection
-unsetopt noclobber
+# Docker
+alias dc='docker compose'
 
-# Enable Globbing
-# https://github.com/sorin-ionescu/prezto/tree/master/modules/utility#disabled-file-globbing
-for cmd in bower fc find fpt history locate rake rsync scp sftp; do
-    cmd_type=$(whence -w "${cmd}")
-    if [ "${cmd_type}" = "alias" ]; then
-        unalias ${cmd}
-    fi
-done
+# 常见拼写错误
+alias kuebctl='kubectl'
 
-# alias bat to cat
-# https://github.com/sharkdp/bat
-if command -v bat &> /dev/null; then
-    alias cat='bat --theme OneHalfDark --style=plain --paging=never'
+# 阻止意外使用 mg editor
+alias mg='echo -e "\033[31mFFFFFFFFucking mg editor...\033[0m"'
+
+# ============================================================================
+# 工具集成
+# ============================================================================
+
+# mise (运行时版本管理)
+if (( $+commands[mise] )); then
+    eval "$(mise activate zsh)"
 fi
-if command -v batcat &> /dev/null; then
+
+# bat (cat 替代)
+if (( $+commands[bat] )); then
+    alias cat='bat --theme OneHalfDark --style=plain --paging=never'
+elif (( $+commands[batcat] )); then
     alias cat='batcat --theme OneHalfDark --style=plain --paging=never'
 fi
 
-# ncdu
-# https://g.blicky.net/ncdu.git/
-if command -v ncdu &> /dev/null; then
+# ncdu (磁盘分析)
+if (( $+commands[ncdu] )); then
     if [[ "$OSTYPE" =~ ^linux ]]; then
         alias ncdu='ncdu --color dark --exclude-kernfs'
     else
@@ -196,28 +176,48 @@ if command -v ncdu &> /dev/null; then
     fi
 fi
 
-# xh
-# https://github.com/ducaale/xh
-if command -v xh &> /dev/null; then
+# xh (HTTPie 替代)
+if (( $+commands[xh] )); then
     alias http='xh'
     alias https='xh --https'
 fi
 
-# command completion
+# ============================================================================
+# 自定义函数
+# ============================================================================
+
+# tmux 快速连接
+function mux() {
+    tmux new-session -A -s "🍁 local"
+}
+
+# 转小写
+function lower() {
+    echo "$@" | tr '[:upper:]' '[:lower:]'
+}
+
+# ============================================================================
+# Completion
+# ============================================================================
+
+# 生成 completion (仅在文件不存在时)
+[[ -d "${HOME}/.zsh_funcs" ]] || mkdir -p "${HOME}/.zsh_funcs"
 for cmd in docker nerdctl podman kubectl helm; do
-    if command -v ${cmd} &> /dev/null && [[ ! -f ${HOME}/.zsh_funcs/_${cmd} ]]; then
-        ${cmd} completion zsh > ${HOME}/.zsh_funcs/_${cmd}
+    if (( $+commands[$cmd] )) && [[ ! -f "${HOME}/.zsh_funcs/_${cmd}" ]]; then
+        ${cmd} completion zsh > "${HOME}/.zsh_funcs/_${cmd}" 2>/dev/null
     fi
 done
 
-# fix zsh completion
-autoload -Uz compinit && compinit
+# 初始化 completion (带缓存)
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
 
-# User Secret 
-# Define the secret configuration in this file, prezto automatically loads it
-test -e "${HOME}/.user.secret" && source "${HOME}/.user.secret"
+# ============================================================================
+# 用户私密配置
+# ============================================================================
 
-# Custom Aliases
-alias mg='echo -e "\033[31mFFFFFFFFucking mg editor...\033[0m"'
-alias kuebctl='kubectl'
-alias dc='docker compose'
+[[ -f "${HOME}/.user.secret" ]] && source "${HOME}/.user.secret"
