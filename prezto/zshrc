@@ -131,6 +131,9 @@ for cmd in bower fc find ftp history locate rake rsync scp sftp; do
     (( $+aliases[$cmd] )) && unalias $cmd
 done
 
+# 覆盖 LS_COLORS: 目录/符号链接去粗体, other-writable 用红字黄底
+LS_COLORS="${LS_COLORS}di=00;34:ln=00;36:ow=31;43:"
+
 # ============================================================================
 # 别名
 # ============================================================================
