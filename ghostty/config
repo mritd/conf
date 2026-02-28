@@ -257,7 +257,7 @@ window-height = 65
 # window-inherit-font-size = true
 
 # 窗口状态保存: default, never, always (仅 macOS)
-# window-save-state = default
+window-save-state = always
 
 # 按网格单元调整窗口大小 (仅 macOS)
 # window-step-resize = false
@@ -424,7 +424,7 @@ shell-integration-features = no-cursor,no-sudo,title,no-ssh-env,no-ssh-terminfo,
 confirm-close-surface = false
 
 # 最后一个窗口关闭后退出 (macOS 默认 false, Linux 默认 true)
-# quit-after-last-window-closed = false
+quit-after-last-window-closed = true
 
 # 最后窗口关闭后延迟退出 (最小 1s, 仅 Linux)
 # quit-after-last-window-closed-delay =
@@ -446,7 +446,7 @@ confirm-close-surface = false
 # ============================================================================
 
 # 程序读取剪贴板权限: ask, allow, deny
-clipboard-read = allow
+clipboard-read = ask
 
 # 程序写入剪贴板权限: ask, allow, deny
 clipboard-write = allow
