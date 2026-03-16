@@ -1,14 +1,9 @@
 " Plug 插件管理
 call plug#begin('~/.vim/plugged')
-Plug 'vim-airline/vim-airline'
-Plug 'terryma/vim-multiple-cursors'
-"Plug 'SirVer/ultisnips'
-"Plug 'honza/vim-snippets'
-Plug 'fholgado/minibufexpl.vim'
-Plug 'sheerun/vim-polyglot'
-Plug 'joshdick/onedark.vim'
-Plug 'earthly/earthly.vim', {'branch': 'main'}
-Plug 'ojroques/vim-oscyank', {'branch': 'main'}
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+Plug 'vim-airline/vim-airline'          " 状态栏美化
+Plug 'terryma/vim-multiple-cursors'     " 多光标编辑 (Ctrl+N)
+Plug 'sheerun/vim-polyglot'             " 多语言语法高亮包
+Plug 'joshdick/onedark.vim'             " OneDark 配色方案
+Plug 'ojroques/vim-oscyank', {'branch': 'main'}            " OSC52 远程剪贴板复制
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}       " 文件树浏览器 (按需加载)
 call plug#end()
-
