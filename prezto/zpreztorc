@@ -13,7 +13,7 @@ zstyle ':prezto:*:*' color 'yes'
 # 加载的 Prezto 模块 (顺序敏感)
 #
 # 已从 autosync 打包中移除的模块:
-#   archive, command-not-found, dnf, docker, dpkg, emacs, fasd, git, gpg,
+#   archive, command-not-found, dnf, docker, dpkg, emacs, fasd, gpg,
 #   gnu-utility (已在 zshrc 中通过 PATH 覆盖替代),
 #   haskell, homebrew, macports, node, ocaml, osx, pacman, perl, python,
 #   rails, rsync, ruby, screen, ssh, tmux, wakeonlan, yum
@@ -25,6 +25,7 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'spectrum' \
   'utility' \
+  'git' \
   'completion' \
   'syntax-highlighting' \
   'history-substring-search' \
@@ -41,6 +42,9 @@ zstyle ':prezto:module:editor' key-bindings 'emacs'
 # ============================================================================
 # 提示符
 # ============================================================================
+
+# git 模块: 仅用于 sorin 主题的 git-info, 跳过全部 alias
+zstyle ':prezto:module:git:alias' skip 'yes'
 
 # 主题 (设为 'random' 随机加载, dumb 终端自动关闭)
 zstyle ':prezto:module:prompt' theme 'sorin'
