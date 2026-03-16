@@ -1,60 +1,35 @@
-#
-# Executes commands at login pre-zshrc.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
+# ============================================================================
+# Zsh 登录前配置 (在 zshrc 之前执行)
+# Author: mritd <mritd@linux.com>
+# ============================================================================
 
-#
-# Browser
-#
+# ============================================================================
+# 基础环境变量
+# ============================================================================
 
+# macOS 默认浏览器
 if [[ -z "$BROWSER" && "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'
 fi
 
-#
-# Editors
-#
-
-if [[ -z "$EDITOR" ]]; then
-  export EDITOR='nano'
-fi
-if [[ -z "$VISUAL" ]]; then
-  export VISUAL='nano'
-fi
+# 分页器
 if [[ -z "$PAGER" ]]; then
   export PAGER='less'
 fi
 
-#
-# Language
-#
-
+# 语言环境 (Linux 下由 zshrc 覆盖完整 LC_* 设置)
 if [[ -z "$LANG" ]]; then
   export LANG='en_US.UTF-8'
 fi
 
-#
-# Paths
-#
+# ============================================================================
+# PATH
+# ============================================================================
 
-if [[ "$OSTYPE" == darwin* ]]; then
-  fpath=(
-    /opt/homebrew/share/zsh/site-functions
-    $fpath
-  )
-fi
-
-# Ensure path arrays do not contain duplicates.
+# 确保路径数组不含重复项
 typeset -gU cdpath fpath mailpath path
 
-# Set the list of directories that cd searches.
-# cdpath=(
-#   $cdpath
-# )
-
-# Set the list of directories that Zsh searches for programs.
+# 基础 PATH 骨架 (zshrc 中通过 path_prepend 追加开发工具路径)
 path=(
   $HOME/{,s}bin(N)
   /opt/{homebrew,local}/{,s}bin(N)
@@ -62,19 +37,16 @@ path=(
   $path
 )
 
-#
+# ============================================================================
 # Less
-#
+# ============================================================================
 
-# Set the default Less options.
-# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
-# Remove -X to enable it.
+# Less 默认选项 (-X 禁用清屏, 同时禁用鼠标滚轮; 移除 -X 可恢复)
 if [[ -z "$LESS" ]]; then
   export LESS='-g -i -M -R -S -w -X -z-4'
 fi
 
-# Set the Less input preprocessor.
-# Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
+# Less 预处理器 (lesspipe / lesspipe.sh)
 if [[ -z "$LESSOPEN" ]] && (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
