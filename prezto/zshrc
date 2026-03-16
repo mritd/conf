@@ -56,8 +56,8 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
     fpath_prepend "${HOMEBREW_PREFIX}/share/zsh/site-functions"
 
-    # GNU 工具 (brew install coreutils findutils gnu-tar gnu-sed gawk gnu-indent gnu-getopt grep)
-    for tool in coreutils findutils gnu-tar gnu-sed gawk gnu-indent grep; do
+    # GNU 工具 (brew install coreutils findutils gnu-tar gnu-sed gawk make gnu-getopt grep)
+    for tool in coreutils findutils gnu-tar gnu-sed gawk make grep; do
         path_prepend "${HOMEBREW_PREFIX}/opt/${tool}/libexec/gnubin"
     done
     # gnu-getopt 没有 libexec/gnubin, 单独处理
@@ -131,6 +131,12 @@ fpath_prepend "${HOME}/.zsh_funcs"
 for cmd in bower fc find ftp history locate rake rsync scp sftp; do
     (( $+aliases[$cmd] )) && unalias $cmd
 done
+
+# GNU ls 颜色初始化 (gnubin PATH 在 prezto utility 模块之后生效, 需手动配置)
+if (( $+commands[dircolors] )); then
+    eval "$(dircolors --sh)"
+fi
+alias ls='ls --color=auto'
 
 # 覆盖 LS_COLORS: 目录/符号链接去粗体, other-writable 用红字黄底
 LS_COLORS="${LS_COLORS}di=00;34:ln=00;36:ow=31;43:"
