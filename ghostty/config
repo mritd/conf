@@ -198,7 +198,7 @@ window-padding-x = 8
 
 # 垂直内边距 (像素), 可用逗号分隔设置上下不同值
 #window-padding-y = 40,6
-window-padding-y = 8,2
+window-padding-y = 4,4
 
 # 自动平衡四边多余空间
 # window-padding-balance = false
