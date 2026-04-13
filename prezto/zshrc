@@ -167,7 +167,7 @@ alias mg='echo -e "\033[31mFFFFFFFFucking mg editor...\033[0m"'
 
 # mise (运行时版本管理)
 if (( $+commands[mise] )); then
-    eval "$(mise activate zsh --shims)"
+    eval "$(mise activate zsh)"
 fi
 
 # bat (cat 替代)
