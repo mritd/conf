@@ -31,6 +31,10 @@ set nowrap
 syntax on
 set termguicolors
 
+" 显示空白字符
+set list
+set listchars=tab:>-,trail:·,extends:>,precedes:<,nbsp:+
+
 " 编辑
 set hidden
 set expandtab
