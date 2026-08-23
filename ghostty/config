@@ -10,8 +10,9 @@
 # ============================================================================
 
 # 主字体, 使用 `ghostty +list-fonts` 查看可用字体
-font-family = Monaco Nerd Font
-#font-family = GeistMono Nerd Font Mono
+#font-family = Monaco Nerd Font
+#font-family = JetBrainsMono Nerd Font Mono
+font-family = CodeNewRoman Nerd Font Mono
 
 # 粗体/斜体/粗斜体字体 (留空则自动从主字体查找变体)
 # font-family-bold =
@@ -33,7 +34,7 @@ font-family = Monaco Nerd Font
 # font-feature =
 
 # 字号 (单位: 点), 支持小数
-font-size = 13.5
+font-size = 15
 
 # 可变字体的变体轴设置, 格式: id=value (如 wght=400)
 # font-variation =
@@ -57,7 +58,7 @@ font-codepoint-map = U+FF00-U+FFEF=PingFang SC
 font-thicken = true
 
 # 加粗笔画强度 (0-255), 仅在 font-thicken=true 时生效
-font-thicken-strength = 255
+font-thicken-strength = 160
 
 # 字体整形断点, 用于控制连字行为, 可用值: cursor
 # font-shaping-break = cursor
@@ -455,7 +456,7 @@ clipboard-write = allow
 # clipboard-trim-trailing-spaces = true
 
 # 粘贴不安全文本时确认
-# clipboard-paste-protection = true
+clipboard-paste-protection = false
 
 # 括号粘贴模式是否视为安全
 # clipboard-paste-bracketed-safe = true

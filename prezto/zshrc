@@ -45,6 +45,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     export HOMEBREW_PREFIX="/opt/homebrew"
     export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
     export HOMEBREW_REPOSITORY="/opt/homebrew"
+    export HOMEBREW_NO_ASK=1
     export HOMEBREW_NO_ENV_HINTS=1
     export HOMEBREW_BUNDLE_DUMP_NO_GO=1
     export HOMEBREW_BUNDLE_DUMP_NO_VSCODE=1
@@ -113,11 +114,18 @@ path_prepend "${GOPATH}/bin"
 # Rust
 path_prepend "${HOME}/.cargo/bin"
 
+# Bun
+path_prepend "${HOME}/.bun/bin"
+
 # Solana
 path_prepend "${HOME}/.local/share/solana/install/active_release/bin"
 
 # Krew (kubectl plugin manager)
 path_prepend "${KREW_ROOT:-${HOME}/.krew}/bin"
+
+# ADB
+export ANDROID_HOME=/opt/homebrew/share/android-commandlinetools
+path_prepend "$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin"
 
 # 自定义 zsh 函数
 fpath_prepend "${HOME}/.zsh_funcs"
