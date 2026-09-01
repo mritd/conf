@@ -58,7 +58,7 @@ font-codepoint-map = U+FF00-U+FFEF=PingFang SC
 font-thicken = true
 
 # 加粗笔画强度 (0-255), 仅在 font-thicken=true 时生效
-font-thicken-strength = 160
+font-thicken-strength = 180
 
 # 字体整形断点, 用于控制连字行为, 可用值: cursor
 # font-shaping-break = cursor
@@ -415,7 +415,7 @@ initial-command = /opt/homebrew/bin/zsh --login -c 'tmux new-session -A -s "🍁
 
 # shell integration 功能: cursor, sudo, title, ssh-env, ssh-terminfo, path
 # 前缀 no- 禁用特定功能
-shell-integration-features = no-cursor,no-sudo,title,no-ssh-env,no-ssh-terminfo,path
+shell-integration-features = no-cursor,no-sudo,title,no-ssh-env,ssh-terminfo,path
 
 # ============================================================================
 # 终端行为
