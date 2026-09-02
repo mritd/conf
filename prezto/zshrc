@@ -238,6 +238,12 @@ else
     compinit -C
 fi
 
+# 为 Ghostty SSH 会话恢复真彩色终端环境
+if [[ -n "$SSH_CONNECTION" && "$TERM" == "xterm-ghostty" ]]; then
+  export COLORTERM=truecolor
+  export TERM_PROGRAM=ghostty
+fi
+
 # ============================================================================
 # 用户私密配置
 # ============================================================================
