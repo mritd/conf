@@ -70,3 +70,6 @@ zstyle ':prezto:module:syntax-highlighting' pattern \
 
 # 下载工具
 zstyle ':prezto:module:utility:download' helper 'wget'
+
+# Claude Code 等无 tty 的 agent shell: 关闭 cp/mv/rm/ln 的 -i alias, 否则提示读到 EOF 会静默失败
+[[ -n "$CLAUDECODE" ]] && zstyle ':prezto:module:utility' safe-ops 'no'
